@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name="ActivityList"></activity>
+        <activity android:name="ActivityAddNew"></activity>
     </application>
-
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>

@@ -61,15 +61,6 @@ public class MainActivity extends Activity implements DatePickerDialog.OnDateSet
 			}
 		});
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		
-		
-		return true;
-	}
 	
 	public void showDatePickerDialog(int year, int month, int day) {
 		DialogFragment newFragment = new DatePickerFragment(this);

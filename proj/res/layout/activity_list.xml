@@ -39,10 +39,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>
-    <TextView 
+    <LinearLayout
         android:id="@android:id/empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="There is no activity match your search..."/>
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <include 
+            layout="@layout/list_activity_footer"/>"
+    </LinearLayout>
 	
 </LinearLayout>
