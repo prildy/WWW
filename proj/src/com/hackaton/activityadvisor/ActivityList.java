@@ -6,6 +6,7 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.GetChars;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,9 @@ import com.hackaton.activityadvisor.adapter.ActivityAdapter;
 import com.hackaton.activityadvisor.model.Acts;
 import com.hackaton.activityadvisor.request.GetActivityRequest;
 
-public class ActivityList extends ListActivity implements GetActivityRequest.OnActivityRequestCallback {
+public class ActivityList extends ListActivity implements
+		GetActivityRequest.OnActivityRequestCallback {
+	private static final int REQUEST_CODE_ADD = 0x1993123;
 	private TextView mWhatText;
 	private TextView mWhereText;
 	private TextView mWhenText;
@@ -43,47 +46,59 @@ public class ActivityList extends ListActivity implements GetActivityRequest.OnA
 			mWhat = mBundle.getString(MainActivity.EXTRA_WHAT);
 			mWhere = mBundle.getString(MainActivity.EXTRA_WHERE);
 			String when = mBundle.getString(MainActivity.EXTRA_WHEN);
-			mWhatText.setText(mWhat);
-			mWhereText.setText(mWhere);
-			mWhenText.setText(when);
+			if (!TextUtils.isEmpty(mWhat)) {
+				mWhatText.setText(mWhat);
+			} else {
+				mWhatText.setText("Anything");
+			}
+			if (!TextUtils.isEmpty(mWhere)) {
+				mWhereText.setText(mWhere);
+			} else {
+				mWhereText.setText("Anywhere");
+			}
+			if (!TextUtils.isEmpty(when)) {
+				mWhenText.setText(when);
+			} else {
+				mWhenText.setText("Anytime");
+			}
 		}
 		ArrayList<Acts> values = new ArrayList<Acts>();
-//		values.add(new Acts("Fun Hiking",
-//				"There will be a fun hiking to merano", "Jack"));
-//		values.add(new Acts("Swimming Party",
-//				"There will be a swimming in the pool nearby", "Michael"));
-//		values.add(new Acts("Trekking to Verano",
-//				"See the alps, go trekking to knottnkino", "+3910222000"));
-//		values.add(new Acts("Snowboarding Vipiteno",
-//				"Feel the snow on this winter, snowboard in Vipiteno",
-//				"+3910222222"));
-//		values.add(new Acts("Fun Hiking",
-//				"There will be a fun hiking to merano", "Jack"));
-//		values.add(new Acts("Swimming Party",
-//				"There will be a swimming in the pool nearby", "Michael"));
-//		values.add(new Acts("Trekking to Verano",
-//				"See the alps, go trekking to knottnkino", "+3910222000"));
-//		values.add(new Acts("Snowboarding Vipiteno",
-//				"Feel the snow on this winter, snowboard in Vipiteno",
-//				"+3910222222"));
-//		values.add(new Acts("Fun Hiking",
-//				"There will be a fun hiking to merano", "Jack"));
-//		values.add(new Acts("Swimming Party",
-//				"There will be a swimming in the pool nearby", "Michael"));
-//		values.add(new Acts("Trekking to Verano",
-//				"See the alps, go trekking to knottnkino", "+3910222000"));
-//		values.add(new Acts("Snowboarding Vipiteno",
-//				"Feel the snow on this winter, snowboard in Vipiteno",
-//				"+3910222222"));
-//		values.add(new Acts("Fun Hiking",
-//				"There will be a fun hiking to merano", "Jack"));
-//		values.add(new Acts("Swimming Party",
-//				"There will be a swimming in the pool nearby", "Michael"));
-//		values.add(new Acts("Trekking to Verano",
-//				"See the alps, go trekking to knottnkino", "+3910222000"));
-//		values.add(new Acts("Snowboarding Vipiteno",
-//				"Feel the snow on this winter, snowboard in Vipiteno",
-//				"+3910222222"));
+		// values.add(new Acts("Fun Hiking",
+		// "There will be a fun hiking to merano", "Jack"));
+		// values.add(new Acts("Swimming Party",
+		// "There will be a swimming in the pool nearby", "Michael"));
+		// values.add(new Acts("Trekking to Verano",
+		// "See the alps, go trekking to knottnkino", "+3910222000"));
+		// values.add(new Acts("Snowboarding Vipiteno",
+		// "Feel the snow on this winter, snowboard in Vipiteno",
+		// "+3910222222"));
+		// values.add(new Acts("Fun Hiking",
+		// "There will be a fun hiking to merano", "Jack"));
+		// values.add(new Acts("Swimming Party",
+		// "There will be a swimming in the pool nearby", "Michael"));
+		// values.add(new Acts("Trekking to Verano",
+		// "See the alps, go trekking to knottnkino", "+3910222000"));
+		// values.add(new Acts("Snowboarding Vipiteno",
+		// "Feel the snow on this winter, snowboard in Vipiteno",
+		// "+3910222222"));
+		// values.add(new Acts("Fun Hiking",
+		// "There will be a fun hiking to merano", "Jack"));
+		// values.add(new Acts("Swimming Party",
+		// "There will be a swimming in the pool nearby", "Michael"));
+		// values.add(new Acts("Trekking to Verano",
+		// "See the alps, go trekking to knottnkino", "+3910222000"));
+		// values.add(new Acts("Snowboarding Vipiteno",
+		// "Feel the snow on this winter, snowboard in Vipiteno",
+		// "+3910222222"));
+		// values.add(new Acts("Fun Hiking",
+		// "There will be a fun hiking to merano", "Jack"));
+		// values.add(new Acts("Swimming Party",
+		// "There will be a swimming in the pool nearby", "Michael"));
+		// values.add(new Acts("Trekking to Verano",
+		// "See the alps, go trekking to knottnkino", "+3910222000"));
+		// values.add(new Acts("Snowboarding Vipiteno",
+		// "Feel the snow on this winter, snowboard in Vipiteno",
+		// "+3910222222"));
 
 		View footer = getLayoutInflater().inflate(
 				R.layout.list_activity_footer, null);
@@ -155,10 +170,11 @@ public class ActivityList extends ListActivity implements GetActivityRequest.OnA
 		mSpinner.setSelection(mSpinnerAdapter.getCount()); // display hint
 
 		getListView().addFooterView(footer);
-		
-		//footer for empty view
+
+		// footer for empty view
 		View emptyView = findViewById(android.R.id.empty);
-		final Spinner mSpinner2 = (Spinner) emptyView.findViewById(R.id.similarSpinner);
+		final Spinner mSpinner2 = (Spinner) emptyView
+				.findViewById(R.id.similarSpinner);
 		View mGoButton2 = emptyView.findViewById(R.id.goSimilarButton);
 		View mSuggestionButton2 = emptyView.findViewById(R.id.suggestion);
 
@@ -192,10 +208,10 @@ public class ActivityList extends ListActivity implements GetActivityRequest.OnA
 
 			}
 		});
-		
+
 		mAdapter = new ActivityAdapter(this, values);
 		setListAdapter(mAdapter);
-		new GetActivityRequest(this,this, mWhat, mWhere).execute();
+		new GetActivityRequest(this, this, mWhat, mWhere).execute();
 	}
 
 	@Override
@@ -205,30 +221,43 @@ public class ActivityList extends ListActivity implements GetActivityRequest.OnA
 
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_add:
-	            Intent addNew = new Intent(this, ActivityAddNew.class);
-	            addNew.putExtras(mBundle);
-	            startActivity(addNew);
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
-	    }
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_add:
+			Intent addNew = new Intent(this, ActivityAddNew.class);
+			addNew.putExtras(mBundle);
+			startActivityForResult(addNew, REQUEST_CODE_ADD);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
 	public void callback(ArrayList<Acts> activities) {
 		System.out.println("on callback get act request");
 		for (Acts ac : activities) {
-			System.out.println(ac.getTitle() + " " + ac.getDesc() + " " + ac.getUser());
+			System.out.println(ac.getTitle() + " " + ac.getDesc() + " "
+					+ ac.getUser());
 		}
 		ArrayList<Acts> currentAct = mAdapter.getActs();
 		currentAct.clear();
 		currentAct.addAll(activities);
 		mAdapter.notifyDataSetChanged();
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (requestCode == REQUEST_CODE_ADD) {
+			if (resultCode == RESULT_OK) {
+				finish();
+			}
+			if (resultCode == RESULT_CANCELED) {
+				// Write your code if there's no result
+			}
+		}
 	}
 }
